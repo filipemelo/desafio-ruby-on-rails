@@ -9,7 +9,7 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://postgres:postgres@db:5432/desafio_dev
-    command: tail -f /dev/null  # Mantém container rodando
+    command: bash -c "bundle install && bundle exec rails server -b 0.0.0.0 -p 3000"
 
   db:
     image: postgres:15
