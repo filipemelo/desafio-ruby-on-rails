@@ -11,4 +11,3 @@ class Store < ApplicationRecord
     end
   end
 end
-

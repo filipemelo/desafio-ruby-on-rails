@@ -6,10 +6,13 @@ class ConfigurationController < ApplicationController
 
   def reset_database
     if params[:confirmation_text] == "CONFIRMAR"
-      Rails.application.load_tasks unless Rake::Task.task_defined?("db:reset")
-      Rake::Task["db:reset"].reenable
-      Rake::Task["db:reset"].invoke
-      flash[:notice] = "Banco de dados resetado com sucesso."
+      begin
+        ActiveRecord::Base.connection.execute("TRUNCATE TABLE transactions RESTART IDENTITY CASCADE;")
+        ActiveRecord::Base.connection.execute("TRUNCATE TABLE stores RESTART IDENTITY CASCADE;")
+        flash[:notice] = "Banco de dados limpo com sucesso. Todas as lojas e transações foram removidas e os índices reiniciados."
+      rescue => e
+        flash[:alert] = "Erro ao limpar banco: #{e.message}"
+      end
     else
       flash[:alert] = "Texto de confirmação incorreto."
     end

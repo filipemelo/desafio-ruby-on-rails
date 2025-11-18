@@ -18,4 +18,3 @@ class CreateTransactions < ActiveRecord::Migration[8.1]
     add_index :transactions, :transaction_type
   end
 end
-

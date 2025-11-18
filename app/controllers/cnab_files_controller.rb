@@ -5,7 +5,7 @@ class CnabFilesController < ApplicationController
 
   def create
     @cnab_file = CnabFile.new(cnab_file_params)
-    
+
     if @cnab_file.save
       result = @cnab_file.import_result
       notice = "Arquivo CNAB processado com sucesso! #{result[:imported_count]} transações importadas de #{result[:stores_count]} loja(s)."

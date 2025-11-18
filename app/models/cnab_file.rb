@@ -11,7 +11,7 @@ class CnabFile
 
     # Processa o arquivo CNAB
     @import_result = CnabImporter.import(@file)
-    
+
     if @import_result[:success]
       true
     else

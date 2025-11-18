@@ -13,10 +13,10 @@ class CnabImporter
   def import
     # Abre o arquivo para leitura
     file_to_parse = @file.respond_to?(:open) ? @file.open : @file
-    
+
     # Parse do arquivo
     @parsed_data = CnabParser.parse(file_to_parse)
-    
+
     return { success: false, errors: @parsed_data[:errors] } if @parsed_data[:errors].any?
 
     # Importa os dados
@@ -48,9 +48,8 @@ class CnabImporter
 
     { success: true, imported_count: @imported_count, stores_count: @parsed_data[:stores].count }
   rescue ActiveRecord::RecordInvalid => e
-    { success: false, errors: ["Erro ao salvar no banco: #{e.message}"] }
+    { success: false, errors: [ "Erro ao salvar no banco: #{e.message}" ] }
   rescue StandardError => e
-    { success: false, errors: ["Erro inesperado: #{e.message}"] }
+    { success: false, errors: [ "Erro inesperado: #{e.message}" ] }
   end
 end
-

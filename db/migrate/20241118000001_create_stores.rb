@@ -10,4 +10,3 @@ class CreateStores < ActiveRecord::Migration[8.1]
     add_index :stores, :name
   end
 end
-
