@@ -21,9 +21,17 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= javascript_import_module_tag "upload" %>
   </head>
 
   <body>
+    <nav style="background: #f8f8f8; border-bottom: 1px solid #ddd; padding: 10px 0; margin-bottom: 24px;">
+      <ul style="display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; justify-content: center;">
+        <li><a href="<%= stores_path %>" style="text-decoration: none; color: #333; font-weight: bold;">Stores</a></li>
+  <li><a href="<%= new_cnab_file_path %>" style="text-decoration: none; color: #333; font-weight: bold;">Upload</a></li>
+        <li><a href="<%= configuration_path %>" style="text-decoration: none; color: #333; font-weight: bold;">Configuration</a></li>
+      </ul>
+    </nav>
     <%= yield %>
   </body>
 </html>

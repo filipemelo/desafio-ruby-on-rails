@@ -1,0 +1,65 @@
+<div class="stores-container">
+  <div class="stores-header" style="text-align: center;">
+    <h1>Lojas e Transações</h1>
+    <p class="subtitle">Lista de todas as lojas com suas transações e saldo total</p>
+    <div style="margin: 24px 0;">
+      <%= link_to "Upload novo arquivo", root_path, class: "upload-link", style: "display: inline-block; padding: 12px 24px; background: #7c5cff; color: #fff; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 1.1em;" %>
+    </div>
+  </div>
+
+  <% if @stores.blank? %>
+    <div class="no-stores" style="margin: 32px auto; text-align: center; color: #666; font-size: 1.2em;">
+      <strong>Não há dados para exibir.</strong><br>
+      Importe um arquivo antes de visualizar as lojas.
+    </div>
+  <% else %>
+    <div class="stores-list">
+      <% @stores.each do |store| %>
+        <div class="store-card">
+          <div class="store-header">
+            <h2><%= store.name %></h2>
+            <div class="store-info">
+              <span class="owner">Dono: <%= store.owner %></span>
+              <span class="balance <%= store.balance >= 0 ? 'positive' : 'negative' %>'">
+                Saldo: <%= number_to_currency(store.balance, unit: 'R$ ', separator: ',', delimiter: '.') %>
+              </span>
+            </div>
+          </div>
+
+          <div class="transactions-list">
+            <h3>Transações (<%= store.transactions.count %>)</h3>
+            <table class="transactions-table">
+              <thead>
+                <tr>
+                  <th>Tipo</th>
+                  <th>Data</th>
+                  <th>Hora</th>
+                  <th>Valor</th>
+                  <th>CPF</th>
+                  <th>Cartão</th>
+                  <th>Natureza</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% store.transactions.order(date: :desc, time: :desc).each do |transaction| %>
+                  <tr>
+                    <td><%= transaction.type_description %></td>
+                    <td><%= transaction.date.strftime('%d/%m/%Y') %></td>
+                    <td><%= transaction.time.strftime('%H:%M:%S') %></td>
+                    <td class="<%= transaction.entrada? ? 'entrada' : 'saida' %>">
+                      <%= transaction.signal %> <%= number_to_currency(transaction.amount, unit: 'R$ ', separator: ',', delimiter: '.') %>
+                    </td>
+                    <td><%= transaction.cpf %></td>
+                    <td><%= transaction.card %></td>
+                    <td><%= transaction.nature %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+

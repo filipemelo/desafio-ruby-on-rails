@@ -1,0 +1,18 @@
+<h1 style="text-align:center;">Configuration</h1>
+
+<div style="max-width:400px;margin:32px auto;padding:24px;border:1px solid #eee;border-radius:8px;background:#fafbfc;">
+  <%= form_with url: configuration_reset_database_path, method: :post, local: true do %>
+    <p style="margin-bottom:16px;">
+      <label for="confirmation_text">Digite <strong>CONFIRMAR</strong> para resetar o banco de dados:</label><br>
+      <%= text_field_tag :confirmation_text, nil, required: true, style: 'width:100%;padding:8px;margin-top:8px;' %>
+    </p>
+    <%= submit_tag "Resetar Banco de Dados", style: 'background:#c00;color:#fff;padding:10px 20px;border:none;border-radius:4px;cursor:pointer;font-weight:bold;', data: { confirm: "Tem certeza? Esta ação é irreversível!" } %>
+  <% end %>
+
+  <% if flash[:notice] %>
+    <p style="color: green; margin-top: 16px;"><%= flash[:notice] %></p>
+  <% end %>
+  <% if flash[:alert] %>
+    <p style="color: red; margin-top: 16px;"><%= flash[:alert] %></p>
+  <% end %>
+</div>
