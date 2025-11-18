@@ -1,37 +1,37 @@
-## Documentação da API
+## API Documentation
 
-### Upload de arquivo CNAB
+### CNAB File Upload
 
 **Endpoint:** `POST /cnab_files`
 
-**Parâmetros:**
-- `cnab_file[file]` (arquivo CNAB, obrigatório)
+**Parameters:**
+- `cnab_file[file]` (CNAB file, required)
 
-**Exemplo usando curl:**
+**Example using curl:**
 ```sh
 curl -X POST \
 	-F "cnab_file[file]=@CNAB.txt" \
 	http://localhost:3000/cnab_files
 ```
 
-**Resposta (redirect):**
-- HTTP 302 para `/stores` em caso de sucesso
-- HTTP 422 com mensagem de erro em caso de falha
+**Response (redirect):**
+- HTTP 302 to `/stores` on success
+- HTTP 422 with error message on failure
 
 ---
 
-### Listar lojas e transações (HTML)
+### List Stores and Transactions (HTML)
 
 **Endpoint:** `GET /stores`
 
-**Resposta:**
-- Página HTML com todas as lojas, donos, saldo e transações importadas
+**Response:**
+- HTML page with all stores, owners, balance and imported transactions
 
 ---
 
-### (Opcional) Listar lojas e transações (JSON)
+### (Optional) List Stores and Transactions (JSON)
 
-Se desejar expor um endpoint JSON, adicione ao `StoresController`:
+If you want to expose a JSON endpoint, add to `StoresController`:
 
 ```ruby
 def index
@@ -45,7 +45,7 @@ end
 
 **Endpoint:** `GET /stores.json`
 
-**Exemplo de resposta:**
+**Example response:**
 ```json
 [
 	{
@@ -61,8 +61,8 @@ end
 				"cpf": "09620676017",
 				"card": "4753****3153",
 				"time": "15:34:53",
-				"description": "Débito",
-				"nature": "Entrada"
+				"description": "Debit",
+				"nature": "Income"
 			}
 		]
 	}
@@ -72,13 +72,13 @@ end
 ---
 ---
 
-## Como consumir a API
+## How to Consume the API
 
-### Upload de arquivo CNAB
+### CNAB File Upload
 
 **Endpoint:** `POST /cnab_files`
 
-**Exemplo usando curl:**
+**Example using curl:**
 
 ```sh
 curl -X POST \
@@ -86,67 +86,67 @@ curl -X POST \
 	http://localhost:3000/cnab_files
 ```
 
-### Listar lojas e transações
+### List Stores and Transactions
 
 **Endpoint:** `GET /stores`
 
-Retorna a página HTML com as lojas e transações importadas. Para uma API JSON, seria necessário criar um endpoint adicional.
+Returns the HTML page with stores and imported transactions. For a JSON API, you would need to create an additional endpoint.
 
 ---
-# Desafio Ruby on Rails - CNAB Bycoders_
+# Ruby on Rails Challenge - CNAB Bycoders_
 
-## Descrição
+## Description
 
-Aplicação web para importar arquivos CNAB, normalizar e exibir transações financeiras por loja, com totalizador de saldo. Feito em Ruby on Rails 8, PostgreSQL, Docker, RSpec, Rubocop e SimpleCov.
+Web application to import CNAB files, normalize and display financial transactions by store, with balance totals. Built with Ruby on Rails 8, PostgreSQL, Docker, RSpec, Rubocop and SimpleCov.
 
 ---
 
-## Requisitos
+## Requirements
 
-- Ruby 3.2+ (ou use Docker)
+- Ruby 3.2+ (or use Docker)
 - Rails 8.1+
 - PostgreSQL
-- Docker e Docker Compose (recomendado)
+- Docker and Docker Compose (recommended)
 
 ---
 
-## Setup rápido com Docker
+## Quick Setup with Docker
 
 ```sh
-# Build da imagem
+# Build the image
 docker-compose build
 
-# Suba os containers (web e db)
+# Start the containers (web and db)
 docker-compose up -d
 
-# Instale as gems (dentro do container)
+# Install gems (inside the container)
 docker-compose exec web bundle install
 
-# Crie e migre o banco de dados
+# Create and migrate the database
 docker-compose exec web bin/rails db:create db:migrate
 ```
 
-Acesse: [http://localhost:3000](http://localhost:3000)
+Access: [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## Como usar
+## How to Use
 
-1. Faça upload do arquivo CNAB.txt na tela principal.
-2. Veja as lojas, transações e saldos em "Stores".
-3. Use o menu "Configuration" para resetar o banco (digite CONFIRMAR).
+1. Upload the CNAB.txt file on the main screen.
+2. View stores, transactions and balances in "Stores".
+3. Use the "Configuration" menu to reset the database (type CONFIRMAR).
 
 ---
 
-## Testes e qualidade
+## Tests and Quality
 
-- **Rodar testes:**
+- **Run tests:**
 	```sh
 	docker-compose exec web bundle exec rspec
 	```
-- **Cobertura de código:**
-	- Após rodar os testes, abra `coverage/index.html` no navegador.
-- **Rodar Rubocop:**
+- **Code coverage:**
+	- After running tests, open `coverage/index.html` in your browser.
+- **Run Rubocop:**
 	```sh
 	docker-compose exec web bundle exec rubocop -A
 	```
@@ -155,33 +155,33 @@ Acesse: [http://localhost:3000](http://localhost:3000)
 
 ## API
 
-- **Endpoint para upload:** `POST /cnab_files`
-- **Endpoint para lojas:** `GET /stores`
-- (Opcional: documente endpoints extras se criar)
+- **Upload endpoint:** `POST /cnab_files`
+- **Stores endpoint:** `GET /stores`
+- (Optional: document extra endpoints if you create them)
 
 ---
 
-## Estrutura do projeto
+## Project Structure
 
-- `app/models` - Models principais: Store, Transaction, CnabFile
-- `app/services` - Lógica de importação e parser CNAB
-- `app/controllers` - Controllers para upload, stores e configuração
-- `spec/` - Testes automatizados (RSpec)
-
----
-
-## Observações
-
-- O reset do banco limpa todas as lojas e transações e reinicia os IDs.
-- O projeto não usa frameworks de CSS populares (apenas CSS vanilla).
-- Cobertura de testes >80% (veja em `coverage/index.html`).
+- `app/models` - Main models: Store, Transaction, CnabFile
+- `app/services` - Import logic and CNAB parser
+- `app/controllers` - Controllers for upload, stores and configuration
+- `spec/` - Automated tests (RSpec)
 
 ---
 
-## Como rodar localmente (sem Docker)
+## Notes
 
-1. Instale Ruby, Rails e PostgreSQL.
-2. Clone o projeto e rode:
+- Database reset clears all stores and transactions and restarts IDs.
+- The project doesn't use popular CSS frameworks (vanilla CSS only).
+- Test coverage >80% (see in `coverage/index.html`).
+
+---
+
+## How to Run Locally (without Docker)
+
+1. Install Ruby, Rails and PostgreSQL.
+2. Clone the project and run:
 	 ```sh
 	 bundle install
 	 rails db:create db:migrate

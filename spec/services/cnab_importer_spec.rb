@@ -2,12 +2,12 @@
 require 'rails_helper'
 
 RSpec.describe CnabImporter, type: :service do
-  # Linha CNAB com campos corretamente alinhados (81 caracteres)
-  # Tipo(1) Data(8) Valor(10) CPF(11) Cartão(12) Hora(6) Dono(14) Loja(19)
-  # Dono: 'JOAO MACEDO   ' (14 chars), Loja: 'BAR DO JOAO         ' (19 chars)
+  # CNAB line with correctly aligned fields (81 characters)
+  # Type(1) Date(8) Amount(10) CPF(11) Card(12) Time(6) Owner(14) Store(19)
+  # Owner: 'JOAO MACEDO   ' (14 chars), Store: 'BAR DO JOAO         ' (19 chars)
   let(:file) { StringIO.new("1201903010000014200096206760174753****3153153453JOAO MACEDO   BAR DO JOAO         ") }
 
-  it 'importa uma transação e loja corretamente' do
+  it 'imports a transaction and store correctly' do
     result = CnabImporter.import(file)
     expect(result[:success]).to eq(true)
     expect(Store.count).to eq(1)
@@ -15,7 +15,7 @@ RSpec.describe CnabImporter, type: :service do
     expect(Store.first.name).to eq('BAR DO JOAO')
   end
 
-  it 'retorna erro para linha inválida' do
+  it 'returns error for invalid line' do
     file = StringIO.new("linha_invalida")
     result = CnabImporter.import(file)
     expect(result[:success]).to eq(false)

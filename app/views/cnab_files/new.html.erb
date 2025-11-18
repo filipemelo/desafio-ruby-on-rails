@@ -1,7 +1,7 @@
 <main class="upload-container">
   <div class="upload-card">
-    <h1>Upload de Arquivo CNAB</h1>
-    <p class="subtitle">Selecione o arquivo CNAB para importar as transações</p>
+    <h1>CNAB File Upload</h1>
+    <p class="subtitle">Select the CNAB file to import transactions</p>
 
     <%= form_with model: @cnab_file, url: cnab_files_path, multipart: true, local: true, class: "upload-form" do |form| %>
       <% if @cnab_file.errors.any? %>
@@ -22,13 +22,13 @@
               id: "cnab_file_file",
               style: "position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 2;" %>
           <span class="file-icon">📄</span>
-          <span class="file-text">Clique para selecionar ou arraste o arquivo aqui</span>
-          <span class="file-hint">Apenas arquivos .txt</span>
+          <span class="file-text">Click to select or drag the file here</span>
+          <span class="file-hint">.txt files only</span>
         </label>
       </div>
 
       <div class="form-actions">
-        <%= form.submit "Enviar Arquivo", class: "submit-button" %>
+        <%= form.submit "Upload File", class: "submit-button" %>
       </div>
     <% end %>
   </div>

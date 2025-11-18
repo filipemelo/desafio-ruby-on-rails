@@ -9,12 +9,12 @@ class ConfigurationController < ApplicationController
       begin
         ActiveRecord::Base.connection.execute("TRUNCATE TABLE transactions RESTART IDENTITY CASCADE;")
         ActiveRecord::Base.connection.execute("TRUNCATE TABLE stores RESTART IDENTITY CASCADE;")
-        flash[:notice] = "Banco de dados limpo com sucesso. Todas as lojas e transações foram removidas e os índices reiniciados."
+        flash[:notice] = "Database successfully cleared. All stores and transactions have been removed and indexes restarted."
       rescue => e
-        flash[:alert] = "Erro ao limpar banco: #{e.message}"
+        flash[:alert] = "Error clearing database: #{e.message}"
       end
     else
-      flash[:alert] = "Texto de confirmação incorreto."
+      flash[:alert] = "Incorrect confirmation text."
     end
     redirect_to configuration_path
   end

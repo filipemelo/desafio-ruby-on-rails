@@ -8,7 +8,7 @@ class CnabFilesController < ApplicationController
 
     if @cnab_file.save
       result = @cnab_file.import_result
-      notice = "Arquivo CNAB processado com sucesso! #{result[:imported_count]} transações importadas de #{result[:stores_count]} loja(s)."
+      notice = "CNAB file processed successfully! #{result[:imported_count]} transactions imported from #{result[:stores_count]} store(s)."
       redirect_to stores_path, notice: notice
     else
       render :new, status: :unprocessable_entity
