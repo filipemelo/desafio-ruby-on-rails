@@ -189,7 +189,3 @@ Acesse: [http://localhost:3000](http://localhost:3000)
 	 ```
 
 ---
-
-## Envio
-
-- Faça fork, implemente, suba no GitHub e envie o link conforme instruções do desafio Bycoders_.
